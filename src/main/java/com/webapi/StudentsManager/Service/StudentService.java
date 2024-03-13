@@ -2,6 +2,9 @@ package com.webapi.StudentsManager.Service;
 
 import com.webapi.StudentsManager.DAL.Student_DAL;
 import com.webapi.StudentsManager.Model.Student;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +16,13 @@ import java.util.Scanner;
 public class StudentService {
     public Student_DAL student_DAL = new Student_DAL();
     private List<Student> students = student_DAL.getData();  //Hashmap is better
+    @Caching(evict =
+            {
+                    @CacheEvict(value = "AllStudent", allEntries = true),
+                    @CacheEvict(value = "NameSearchStudent", allEntries = true),
+                    @CacheEvict(value = "GPASortStudent", allEntries = true),
+                    @CacheEvict(value = "NameSortStudent", allEntries = true)
+            })
     public Student addStudent(Student student)
     {
         student.setId(students.get(students.size() - 1).getId()+1);
@@ -20,6 +30,13 @@ public class StudentService {
         student_DAL.saveData(students);
         return student;
     }
+    @Caching(evict =
+            {
+                    @CacheEvict(value = "AllStudent", allEntries = true),
+                    @CacheEvict(value = "NameSearchStudent", allEntries = true),
+                    @CacheEvict(value = "GPASortStudent", allEntries = true),
+                    @CacheEvict(value = "NameSortStudent", allEntries = true)
+            })
     public String updateStudent(Student updateStudent)
     {
         for(Student student: students)
@@ -40,6 +57,13 @@ public class StudentService {
         }
         return "!Update Successful";
     }
+    @Caching(evict =
+            {
+                    @CacheEvict(value = "AllStudent", allEntries = true),
+                    @CacheEvict(value = "NameSearchStudent", allEntries = true),
+                    @CacheEvict(value = "GPASortStudent", allEntries = true),
+                    @CacheEvict(value = "NameSortStudent", allEntries = true)
+            })
     public String deleteById(int id)
     {
         for(Student student: students)
@@ -53,6 +77,7 @@ public class StudentService {
         }
         return "!Delete Successful";
     }
+    @Cacheable(value = "NameSearchStudent")
     public List<Student> searchByName(String name)
     {
         List<Student> studentList = new ArrayList<>();
@@ -65,6 +90,7 @@ public class StudentService {
         }
         return studentList;
     }
+    @Cacheable(value = "GPASortStudent")
     public List<Student> sortByGPA()
     {
         students.sort(new Comparator<Student>() {
@@ -75,6 +101,7 @@ public class StudentService {
         });
         return students;
     }
+    @Cacheable(value = "NameSortStudent")
     public List<Student> sortByName()
     {
         students.sort(new Comparator<Student>() {
@@ -87,6 +114,7 @@ public class StudentService {
         });
         return students;
     }
+    @Cacheable(value = "AllStudent")
     public List<Student> displayAllStudent()
     {
         return students;
