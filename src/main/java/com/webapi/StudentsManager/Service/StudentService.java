@@ -3,6 +3,7 @@ package com.webapi.StudentsManager.Service;
 import com.webapi.StudentsManager.DAL.Student_DAL;
 import com.webapi.StudentsManager.Model.Student;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class StudentService {
                     @CacheEvict(value = "GPASortStudent", allEntries = true),
                     @CacheEvict(value = "NameSortStudent", allEntries = true)
             })
+    //@CachePut("addStudent")
     public Student addStudent(Student student)
     {
         student.setId(students.get(students.size() - 1).getId()+1);
@@ -37,6 +39,7 @@ public class StudentService {
                     @CacheEvict(value = "GPASortStudent", allEntries = true),
                     @CacheEvict(value = "NameSortStudent", allEntries = true)
             })
+    //@CachePut("UpdateStudent")
     public String updateStudent(Student updateStudent)
     {
         for(Student student: students)
@@ -64,6 +67,7 @@ public class StudentService {
                     @CacheEvict(value = "GPASortStudent", allEntries = true),
                     @CacheEvict(value = "NameSortStudent", allEntries = true)
             })
+    //@CachePut("deleteStudent")
     public String deleteById(int id)
     {
         for(Student student: students)

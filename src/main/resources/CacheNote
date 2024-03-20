@@ -1,0 +1,22 @@
+Có 4 loại caching:
+ In-memory Caching
+ Database Caching
+ Web server Caching
+ CDN Caching
+
+in-memory Caching:
+ cải thiện hiệu suất ứng dụng tại những phần thường xuyên được truy cập.
+redis và memcached là in-memory caching. nó lưu trữ bằng  cách sử dụng key-value như query
+
+CDN Caching:
+Sử dụng nhóm các server để lưu trữ dữ liệu, tăng tốc độ duyệt web bằng các đưa các nội dung web gần với người dùng hơn.
+nó lưu trữ các nội dung web vào server gần người dùng nhất.
+
+Web server Caching
+nó như là 1 bản sao chép của web, nó lưu trữ lại lần đầu người dùng đến page, nếu lần sau người dùng lại request page
+lần nữa thì nó sẽ lấy dữ liệu từ cache ra.
+
+DataBase Caching?
+
+
+Cacheable vs cacheput??
